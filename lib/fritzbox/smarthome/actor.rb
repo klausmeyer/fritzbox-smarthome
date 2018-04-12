@@ -12,7 +12,8 @@ module Fritzbox
         :hkr_temp_is,
         :hkr_temp_set,
         :hkr_next_change_period,
-        :hkr_next_change_temp
+        :hkr_next_change_temp,
+        :group_members
 
       class << self
         def all(types: ['group', 'device'])
@@ -39,6 +40,7 @@ module Fritzbox
             hkr_temp_set:           data.dig('hkr', 'tsoll').to_i * 0.5,
             hkr_next_change_period: Time.at(data.dig('hkr', 'nextchange', 'endperiod').to_i),
             hkr_next_change_temp:   data.dig('hkr', 'nextchange', 'tchange').to_i * 0.5,
+            group_members:          data.dig('groupinfo', 'members').to_s.split(',').presence
           )
         end
       end

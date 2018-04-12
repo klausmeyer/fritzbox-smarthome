@@ -28,6 +28,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
       expect(actor.hkr_next_change_temp).to   eq 23.0
+      expect(actor.group_members).to          eq ['18', '16']
 
       actor = actors.shift
       expect(actor.type).to                   eq :device
@@ -38,6 +39,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
       expect(actor.hkr_next_change_temp).to   eq 23.0
+      expect(actor.group_members).to          be nil
 
       actor = actors.shift
       expect(actor.type).to                   eq :device
@@ -48,6 +50,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
       expect(actor.hkr_next_change_temp).to   eq 23.0
+      expect(actor.group_members).to          be nil
     end
   end
 
