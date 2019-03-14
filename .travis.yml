@@ -4,5 +4,5 @@ branches:
     - master
 language: ruby
 rvm:
-  - 2.6.1
+  - 2.6.2
 before_install: gem install bundler -v 1.17.3
