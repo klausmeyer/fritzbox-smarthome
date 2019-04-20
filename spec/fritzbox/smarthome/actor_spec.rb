@@ -62,7 +62,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
 
     it 'sends the update command and returns true' do
       actor = described_class.new(ain: '12345 678902')
-      expect(actor.update_hkr_temp_set(BigDecimal.new('20.0'))).to be true
+      expect(actor.update_hkr_temp_set(BigDecimal('20.0'))).to be true
     end
   end
 end
