@@ -1,8 +1,0 @@
-sudo: false
-branches:
-  only:
-    - master
-language: ruby
-rvm:
-  - 2.6.6
-before_install: gem install bundler -v 1.17.3
