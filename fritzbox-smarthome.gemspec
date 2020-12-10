@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'activesupport', '>= 5.1', '< 6.1'
-  spec.add_dependency 'activemodel', '>= 5.1', '< 6.1'
+  spec.add_dependency 'activemodel', '>= 5.1', '<= 6.1.0'
   spec.add_dependency 'httparty', '~> 0.16'
   spec.add_dependency 'nori', '~> 2.6'
   spec.add_dependency 'nokogiri', '~> 1.8'
