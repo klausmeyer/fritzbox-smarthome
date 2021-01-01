@@ -1,30 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <devicelist version="1">
-  <group identifier="65:0A:0C-900" id="900" functionbitmask="4160" fwversion="1.0" manufacturer="AVM" productname="">
-    <present>1</present>
-    <name>Heizungen</name>
-    <hkr>
-      <tist>42</tist>
-      <tsoll>32</tsoll>
-      <absenk>32</absenk>
-      <komfort>46</komfort>
-      <lock>0</lock>
-      <devicelock>0</devicelock>
-      <errorcode>0</errorcode>
-      <batterylow>0</batterylow>
-      <nextchange>
-        <endperiod>1523332800</endperiod>
-        <tchange>46</tchange>
-      </nextchange>
-    </hkr>
-    <groupinfo>
-      <masterdeviceid>0</masterdeviceid>
-      <members>18,16</members>
-    </groupinfo>
-  </group>
   <device identifier="12345 678901" id="18" functionbitmask="320" fwversion="03.54" manufacturer="AVM" productname="Comet DECT">
     <present>1</present>
     <name>Heizung Wohnzimmer</name>
+    <manufacturer>AVM</manufacturer>
+    <battery>80</battery>
+    <batterylow>0</batterylow>
     <temperature>
       <celsius>205</celsius>
       <offset>0</offset>
@@ -47,6 +28,9 @@
   <device identifier="12345 678902" id="16" functionbitmask="320" fwversion="03.54" manufacturer="AVM" productname="Comet DECT">
     <present>1</present>
     <name>Heizung Küche</name>
+    <manufacturer>AVM</manufacturer>
+    <battery>10</battery>
+    <batterylow>1</batterylow>
     <temperature>
       <celsius>205</celsius>
       <offset>0</offset>

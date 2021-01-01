@@ -12,7 +12,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
   describe '.all' do
     it 'returns a list of actors' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
-        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getactorlistinfos.xml', __FILE__)))
 
       actors = described_class.all
       expect(actors.size).to eq 2
@@ -22,6 +22,9 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.id).to                     eq '18'
       expect(actor.ain).to                    eq '12345 678901'
       expect(actor.name).to                   eq 'Heizung Wohnzimmer'
+      expect(actor.manufacturer).to           eq 'AVM'
+      expect(actor.battery).to                eq 80
+      expect(actor.batterylow).to             eq 0
       expect(actor.hkr_temp_is).to            eq 20.5
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
@@ -33,6 +36,9 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.id).to                     eq '16'
       expect(actor.ain).to                    eq '12345 678902'
       expect(actor.name).to                   eq 'Heizung Küche'
+      expect(actor.manufacturer).to           eq 'AVM'
+      expect(actor.battery).to                eq 10
+      expect(actor.batterylow).to             eq 1
       expect(actor.hkr_temp_is).to            eq 20.5
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
@@ -42,7 +48,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
 
     it 'returns a list of actors and group' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
-        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdeviceandgrouplistinfos.xml', __FILE__)))
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getactorandgrouplistinfos.xml', __FILE__)))
 
       actors = described_class.all
       expect(actors.size).to eq 3
@@ -63,6 +69,9 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.id).to                     eq '18'
       expect(actor.ain).to                    eq '12345 678901'
       expect(actor.name).to                   eq 'Heizung Wohnzimmer'
+      expect(actor.manufacturer).to           eq 'AVM'
+      expect(actor.battery).to                eq 80
+      expect(actor.batterylow).to             eq 0
       expect(actor.hkr_temp_is).to            eq 20.5
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
@@ -74,6 +83,9 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.id).to                     eq '16'
       expect(actor.ain).to                    eq '12345 678902'
       expect(actor.name).to                   eq 'Heizung Küche'
+      expect(actor.manufacturer).to           eq 'AVM'
+      expect(actor.battery).to                eq 80
+      expect(actor.batterylow).to             eq 0
       expect(actor.hkr_temp_is).to            eq 20.5
       expect(actor.hkr_temp_set).to           eq 16.0
       expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')

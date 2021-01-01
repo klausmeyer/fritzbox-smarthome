@@ -1,34 +1,16 @@
 module Fritzbox
   module Smarthome
-    class Actor < Resource
-      include ActiveModel::Model
+    class Actor < Device
 
       attr_accessor \
-        :id,
-        :type,
-        :ain,
-        :present,
-        :name,
+        :battery,
+        :batterylow,
         :hkr_temp_is,
         :hkr_temp_set,
         :hkr_next_change_period,
-        :hkr_next_change_temp,
-        :group_members
+        :hkr_next_change_temp
 
       class << self
-        def all(types: ['group', 'device'])
-          response = get(command: 'getdevicelistinfos')
-          xml = nori.parse(response.body)
-
-          Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).compact.map do |data|
-            new_from_api(data)
-          end
-        end
-
-        def only_heaters
-          all.select { |record| record.hkr_temp_is.present? }
-        end
-
         def new_from_api(data)
           new(
             id:                     data.dig('@id').to_s,
@@ -36,6 +18,9 @@ module Fritzbox
             ain:                    data.dig('@identifier').to_s,
             present:                data.dig('present') == '1',
             name:                   data.dig('name').to_s,
+            manufacturer:           data.dig('manufacturer').to_s,
+            battery:                data.dig('battery').to_i,
+            batterylow:             data.dig('batterylow').to_i,
             hkr_temp_is:            data.dig('hkr', 'tist').to_i * 0.5,
             hkr_temp_set:           data.dig('hkr', 'tsoll').to_i * 0.5,
             hkr_next_change_period: Time.at(data.dig('hkr', 'nextchange', 'endperiod').to_i),
