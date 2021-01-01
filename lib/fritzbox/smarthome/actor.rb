@@ -12,6 +12,7 @@ module Fritzbox
 
       class << self
         def new_from_api(data)
+          return nil if data.dig('hkr') == nil
           new(
             id:                     data.dig('@id').to_s,
             type:                   data.dig('groupinfo').present? ? :group : :device,

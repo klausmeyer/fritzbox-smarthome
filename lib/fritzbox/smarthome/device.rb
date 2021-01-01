@@ -10,16 +10,17 @@ module Fritzbox
         :present,
         :name,
         :manufacturer,
-        :group_members
+        :group_members,
+        :device_type
 
       class << self
         def all(types: ['group', 'device'])
           response = get(command: 'getdevicelistinfos')
           xml = nori.parse(response.body)
-
+          
           Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).compact.map do |data|
             new_from_api(data)
-          end
+          end.compact
         end
 
         def new_from_api(data)
@@ -31,6 +32,7 @@ module Fritzbox
             name:                   data.dig('name').to_s,
             manufacturer:           data.dig('manufacturer').to_s,
             group_members:          data.dig('groupinfo', 'members').to_s.split(',').presence
+            # TODO: implement device type
           )
         end
       end

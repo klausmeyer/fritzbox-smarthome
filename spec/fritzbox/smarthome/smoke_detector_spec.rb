@@ -12,15 +12,15 @@ RSpec.describe Fritzbox::Smarthome::SmokeDetector do
   describe '.all' do
     it 'returns a list of smoke detectors' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
-        to_return(body: File.read(File.expand_path('../../../support/fixtures/getsmokedetectorlistinfos.xml', __FILE__)))
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
 
       smoke_detectors = described_class.all
       expect(smoke_detectors.size).to eq 2
 
       smoke_detector = smoke_detectors.shift
       expect(smoke_detector.type).to                   eq :device
-      expect(smoke_detector.id).to                     eq '18'
-      expect(smoke_detector.ain).to                    eq '12345 678901'
+      expect(smoke_detector.id).to                     eq '15'
+      expect(smoke_detector.ain).to                    eq '12345 678903'
       expect(smoke_detector.name).to                   eq 'Rauchmelder Wohnzimmer'
       expect(smoke_detector.manufacturer).to           eq '0x2c3c'
       expect(smoke_detector.alert_state).to            eq 0
@@ -28,8 +28,8 @@ RSpec.describe Fritzbox::Smarthome::SmokeDetector do
 
       smoke_detector = smoke_detectors.shift
       expect(smoke_detector.type).to                   eq :device
-      expect(smoke_detector.id).to                     eq '16'
-      expect(smoke_detector.ain).to                    eq '12345 678902'
+      expect(smoke_detector.id).to                     eq '14'
+      expect(smoke_detector.ain).to                    eq '12345 678904'
       expect(smoke_detector.name).to                   eq 'Rauchmelder Küche'
       expect(smoke_detector.manufacturer).to           eq '0x2c3c'
       expect(smoke_detector.alert_state).to            eq 0

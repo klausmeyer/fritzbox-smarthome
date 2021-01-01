@@ -12,7 +12,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
   describe '.all' do
     it 'returns a list of actors' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
-        to_return(body: File.read(File.expand_path('../../../support/fixtures/getactorlistinfos.xml', __FILE__)))
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
 
       actors = described_class.all
       expect(actors.size).to eq 2

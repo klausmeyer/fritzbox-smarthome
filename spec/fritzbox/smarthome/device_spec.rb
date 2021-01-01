@@ -10,18 +10,18 @@ RSpec.describe Fritzbox::Smarthome::Device do
   end
 
   describe '.all' do
-    it 'returns a list of smoke detectors' do
+    it 'returns a list of all devices' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
-        to_return(body: File.read(File.expand_path('../../../support/fixtures/getswitchlistinfos.xml', __FILE__)))
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
 
       smoke_detectors = described_class.all
-      expect(smoke_detectors.size).to eq 1
+      expect(smoke_detectors.size).to eq 5
 
       smoke_detector = smoke_detectors.shift
       expect(smoke_detector.type).to                   eq :device
       expect(smoke_detector.id).to                     eq '18'
       expect(smoke_detector.ain).to                    eq '12345 678901'
-      expect(smoke_detector.name).to                   eq 'FRITZ!DECT 200 Steckdose'
+      expect(smoke_detector.name).to                   eq 'Heizung Wohnzimmer'
       expect(smoke_detector.manufacturer).to           eq 'AVM'
       expect(smoke_detector.group_members).to          be nil
     end
