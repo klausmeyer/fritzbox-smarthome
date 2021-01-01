@@ -20,7 +20,7 @@ module Fritzbox
           response = get(command: 'getdevicelistinfos')
           xml = nori.parse(response.body)
 
-          Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).map do |data|
+          Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).compact.map do |data|
             new_from_api(data)
           end
         end

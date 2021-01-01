@@ -10,12 +10,40 @@ RSpec.describe Fritzbox::Smarthome::Actor do
   end
 
   describe '.all' do
-    before do
+    it 'returns a list of actors' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
         to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
+
+      actors = described_class.all
+      expect(actors.size).to eq 2
+
+      actor = actors.shift
+      expect(actor.type).to                   eq :device
+      expect(actor.id).to                     eq '18'
+      expect(actor.ain).to                    eq '12345 678901'
+      expect(actor.name).to                   eq 'Heizung Wohnzimmer'
+      expect(actor.hkr_temp_is).to            eq 20.5
+      expect(actor.hkr_temp_set).to           eq 16.0
+      expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
+      expect(actor.hkr_next_change_temp).to   eq 23.0
+      expect(actor.group_members).to          be nil
+
+      actor = actors.shift
+      expect(actor.type).to                   eq :device
+      expect(actor.id).to                     eq '16'
+      expect(actor.ain).to                    eq '12345 678902'
+      expect(actor.name).to                   eq 'Heizung Küche'
+      expect(actor.hkr_temp_is).to            eq 20.5
+      expect(actor.hkr_temp_set).to           eq 16.0
+      expect(actor.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
+      expect(actor.hkr_next_change_temp).to   eq 23.0
+      expect(actor.group_members).to          be nil
     end
 
-    it 'returns a list of actors' do
+    it 'returns a list of actors and group' do
+      stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdeviceandgrouplistinfos.xml', __FILE__)))
+
       actors = described_class.all
       expect(actors.size).to eq 3
 
