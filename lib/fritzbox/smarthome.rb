@@ -5,8 +5,8 @@ require 'nori'
 
 require 'fritzbox/smarthome/version'
 require 'fritzbox/smarthome/resource'
-require 'fritzbox/smarthome/device'
 require 'fritzbox/smarthome/actor'
+require 'fritzbox/smarthome/heater'
 require 'fritzbox/smarthome/switch'
 require 'fritzbox/smarthome/smoke_detector'
 
