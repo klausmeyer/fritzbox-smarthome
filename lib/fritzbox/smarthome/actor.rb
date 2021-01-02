@@ -10,8 +10,7 @@ module Fritzbox
         :present,
         :name,
         :manufacturer,
-        :group_members,
-        :device_type
+        :group_members
 
       class << self
         def all(types: ['group', 'device'])

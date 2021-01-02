@@ -8,8 +8,7 @@ module Fritzbox
         :hkr_temp_is,
         :hkr_temp_set,
         :hkr_next_change_period,
-        :hkr_next_change_temp,
-        :default_values
+        :hkr_next_change_temp
 
       class << self
         def match?(data)
