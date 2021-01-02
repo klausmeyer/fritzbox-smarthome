@@ -7,13 +7,17 @@ module Fritzbox
         :last_alert
 
       class << self
+        def match?(data)
+          data.key?('alert')
+        end
+
         def new_from_api(data)
-          return if data.dig('alert', 'state') == nil
-          @values = {
-            alert_state:            data.dig('alert', 'state').to_i,
-            last_alert:             Time.at(data.dig('alert', 'lastalertchgtimestamp').to_i)
-          }
-          super
+          instance = super
+          instance.assign_attributes(
+             alert_state: data.dig('alert', 'state').to_i,
+             last_alert:  Time.at(data.dig('alert', 'lastalertchgtimestamp').to_i)
+          )
+          instance
         end
       end
     end

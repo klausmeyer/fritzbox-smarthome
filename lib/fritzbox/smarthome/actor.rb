@@ -17,24 +17,22 @@ module Fritzbox
         def all(types: ['group', 'device'])
           response = get(command: 'getdevicelistinfos')
           xml = nori.parse(response.body)
-          
           Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).compact.map do |data|
-            new_from_api(data)
-          end.compact
+              klass = Actor.descendants.find { |k| k.match?(data) }
+              self.in?([klass, Actor]) ? klass.new_from_api(data) : nil
+            end.compact
         end
 
         def new_from_api(data)
-          @default_values = {
-            id:                     data.dig('@id').to_s,
-            type:                   data.dig('groupinfo').present? ? :group : :device,
-            ain:                    data.dig('@identifier').to_s,
-            present:                data.dig('present') == '1',
-            name:                   data.dig('name').to_s,
-            manufacturer:           data.dig('manufacturer').to_s,
-            group_members:          data.dig('groupinfo', 'members').to_s.split(',').presence
-            # TODO: implement device type
-          }
-          new(**@default_values.merge(@values || {}))
+          new(
+            id:            data.dig('@id').to_s,
+            type:          data.dig('groupinfo').present? ? :group : :device,
+            ain:           data.dig('@identifier').to_s,
+            present:       data.dig('present') == '1',
+            name:          data.dig('name').to_s,
+            manufacturer:  data.dig('manufacturer').to_s,
+            group_members: data.dig('groupinfo', 'members').to_s.split(',').presence
+          )
         end
       end
     end

@@ -15,9 +15,13 @@ module Fritzbox
         :temperature_offset
 
       class << self
+        def match?(data)
+          data.key?('switch')
+        end
+
         def new_from_api(data)
-          return if data.dig('switch', 'state') == nil
-          @values = {
+          instance = super
+          instance.assign_attributes(
             switch_state:           data.dig('switch', 'state').to_i,
             switch_mode:            data.dig('switch', 'mode').to_s,
             switch_lock:            data.dig('switch', 'lock').to_i,
@@ -28,8 +32,8 @@ module Fritzbox
             powermeter_energy:      data.dig('powermeter', 'energy').to_i,
             temperature_celsius:    data.dig('temperature', 'celsius').to_i,
             temperature_offset:     data.dig('temperature', 'offset').to_i
-          }
-          super
+          )
+          instance
         end
       end
     end

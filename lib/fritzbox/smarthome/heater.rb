@@ -12,17 +12,21 @@ module Fritzbox
         :default_values
 
       class << self
+        def match?(data)
+          data.key?('hkr')
+        end
+
         def new_from_api(data)
-          return nil if data.dig('hkr') == nil
-          @values = {
+          instance = super
+          instance.assign_attributes(
             battery:                data.dig('battery').to_i,
             batterylow:             data.dig('batterylow').to_i,
             hkr_temp_is:            data.dig('hkr', 'tist').to_i * 0.5,
             hkr_temp_set:           data.dig('hkr', 'tsoll').to_i * 0.5,
             hkr_next_change_period: Time.at(data.dig('hkr', 'nextchange', 'endperiod').to_i),
             hkr_next_change_temp:   data.dig('hkr', 'nextchange', 'tchange').to_i * 0.5
-          }
-          super
+          )
+          instance
         end
       end
 
