@@ -19,7 +19,7 @@ RSpec.describe Fritzbox::Smarthome::Switch do
 
       smoke_detector = smoke_detectors.shift
       expect(smoke_detector.type).to                   eq :device
-      expect(smoke_detector.id).to                     eq '18'
+      expect(smoke_detector.id).to                     eq '13'
       expect(smoke_detector.ain).to                    eq '12345 678905'
       expect(smoke_detector.name).to                   eq 'FRITZ!DECT 200 Steckdose'
       expect(smoke_detector.manufacturer).to           eq 'AVM'
