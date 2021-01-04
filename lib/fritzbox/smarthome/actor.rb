@@ -9,48 +9,30 @@ module Fritzbox
         :ain,
         :present,
         :name,
-        :hkr_temp_is,
-        :hkr_temp_set,
-        :hkr_next_change_period,
-        :hkr_next_change_temp,
+        :manufacturer,
         :group_members
 
       class << self
         def all(types: ['group', 'device'])
           response = get(command: 'getdevicelistinfos')
           xml = nori.parse(response.body)
-
           Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).compact.map do |data|
-            new_from_api(data)
-          end
-        end
-
-        def only_heaters
-          all.select { |record| record.hkr_temp_is.present? }
+              klass = Actor.descendants.find { |k| k.match?(data) }
+              self.in?([klass, Actor]) ? klass.new_from_api(data) : nil
+            end.compact
         end
 
         def new_from_api(data)
           new(
-            id:                     data.dig('@id').to_s,
-            type:                   data.dig('groupinfo').present? ? :group : :device,
-            ain:                    data.dig('@identifier').to_s,
-            present:                data.dig('present') == '1',
-            name:                   data.dig('name').to_s,
-            hkr_temp_is:            data.dig('hkr', 'tist').to_i * 0.5,
-            hkr_temp_set:           data.dig('hkr', 'tsoll').to_i * 0.5,
-            hkr_next_change_period: Time.at(data.dig('hkr', 'nextchange', 'endperiod').to_i),
-            hkr_next_change_temp:   data.dig('hkr', 'nextchange', 'tchange').to_i * 0.5,
-            group_members:          data.dig('groupinfo', 'members').to_s.split(',').presence
+            id:            data.dig('@id').to_s,
+            type:          data.dig('groupinfo').present? ? :group : :device,
+            ain:           data.dig('@identifier').to_s,
+            present:       data.dig('present') == '1',
+            name:          data.dig('name').to_s,
+            manufacturer:  data.dig('manufacturer').to_s,
+            group_members: data.dig('groupinfo', 'members').to_s.split(',').presence
           )
         end
-      end
-
-      def update_hkr_temp_set(value)
-        raise ArgumentError unless value.is_a? BigDecimal
-        value = (value / 0.5).to_i
-        response = self.class.get(command: 'sethkrtsoll', ain: ain, param: value)
-        raise 'Could not set temperature' unless response.body == "#{value}\n"
-        true
       end
     end
   end
