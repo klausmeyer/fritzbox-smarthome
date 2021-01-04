@@ -17,9 +17,9 @@ module Fritzbox
           response = get(command: 'getdevicelistinfos')
           xml = nori.parse(response.body)
           Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).compact.map do |data|
-              klass = Actor.descendants.find { |k| k.match?(data) }
-              self.in?([klass, Actor]) ? klass.new_from_api(data) : nil
-            end.compact
+            klass = Actor.descendants.find { |k| k.match?(data) }
+            self.in?([klass, Actor]) ? klass.new_from_api(data) : nil
+          end.compact
         end
 
         def new_from_api(data)
