@@ -38,7 +38,7 @@ end
 actors = Fritzbox::Smarthome::Actor.all
 
 # Get all actors of type Heater
-heaters = Fritzbox::Smarthome::Heaters.all
+heaters = Fritzbox::Smarthome::Heater.all
 heaters.last.update_hkr_temp_set(BigDecimal('21.5'))
 ```
 
