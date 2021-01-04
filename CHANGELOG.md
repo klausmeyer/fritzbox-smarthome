@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.0
+
+**Attention**: This release contains breaking changes! Check [README](README.md) for new interface.
+
+* Add support for more actors types: switches and smoke detector
+* Extract heater specific attributes and logic to own class
+
 ## v0.1.3
 
 * avoid nil error in actors:all smart devices request

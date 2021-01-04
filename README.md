@@ -2,6 +2,12 @@
 
 Ruby client library to interface with Smarthome features of your FritzBox.
 
+Currently implemented actor types:
+
+* Heater
+* SmokeDetector
+* Switch
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -28,10 +34,12 @@ Fritzbox::Smarthome.configure do |config|
   config.verify_ssl = false
 end
 
+# Get all actors of any type
 actors = Fritzbox::Smarthome::Actor.all
 
-actor = actors.last
-actor.update_hkr_temp_set(BigDecimal.new('21.5'))
+# Get all actors of type Heater
+heaters = Fritzbox::Smarthome::Heaters.all
+heaters.last.update_hkr_temp_set(BigDecimal('21.5'))
 ```
 
 ## Development
