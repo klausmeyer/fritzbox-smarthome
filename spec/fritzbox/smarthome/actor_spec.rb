@@ -15,7 +15,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
         to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
 
       actors = described_class.all
-      expect(actors.size).to eq 5
+      expect(actors.size).to eq 6
 
       actor = actors.shift
       expect(actor.class).to                  eq Fritzbox::Smarthome::Heater
@@ -60,6 +60,16 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.ain).to                    eq '12345 678905'
       expect(actor.name).to                   eq 'FRITZ!DECT 200 Steckdose'
       expect(actor.manufacturer).to           eq 'AVM'
+      expect(actor.group_members).to          be nil
+
+      # An unrecognised device that couldn't be linked to a specific Actor subclass:
+      actor = actors.shift
+      expect(actor.class).to                  eq Fritzbox::Smarthome::Actor
+      expect(actor.type).to                   eq :device
+      expect(actor.id).to                     eq "4711"
+      expect(actor.ain).to                    eq "12345 54321"
+      expect(actor.name).to                   eq "Sub-Etha Radio Transmitter"
+      expect(actor.manufacturer).to           eq ""
       expect(actor.group_members).to          be nil
     end
   end
