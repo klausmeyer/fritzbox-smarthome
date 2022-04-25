@@ -20,14 +20,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '>= 5.1', '< 6.2'
-  spec.add_dependency 'activemodel', '>= 5.1', '<= 7.0.2.3'
-  spec.add_dependency 'httparty', '~> 0.16'
+  spec.add_dependency 'activesupport', '>= 5.1', '<= 7.1'
+  spec.add_dependency 'activemodel', '>= 5.1', '<= 7.1'
+  spec.add_dependency 'httparty', '~> 0.20'
   spec.add_dependency 'nori', '~> 2.6'
-  spec.add_dependency 'nokogiri', '~> 1.8'
+  spec.add_dependency 'nokogiri', '~> 1.13'
 
   spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'webmock', '~> 3.3'
-  spec.add_development_dependency 'byebug', '~> 11.0'
+  spec.add_development_dependency 'rspec', '~> 3.11'
+  spec.add_development_dependency 'webmock', '~> 3.14'
+  spec.add_development_dependency 'byebug', '~> 11.1'
 end
