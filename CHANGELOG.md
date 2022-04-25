@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.0
+
+* Use generic Actor class for unrecognised device
+* Allow usage in rails up to 7.1.x
+* Use ruby 3.1.x in development
+* Update a other dependencies
+
 ## v0.2.0
 
 **Attention**: This release contains breaking changes! Check [README](README.md) for new interface.
