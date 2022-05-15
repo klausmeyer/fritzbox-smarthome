@@ -71,6 +71,15 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.name).to                   eq "Sub-Etha Radio Transmitter"
       expect(actor.manufacturer).to           eq ""
       expect(actor.group_members).to          be nil
+
+      actor = actors.shift
+      expect(actor.class).to                  eq Fritzbox::Smarthome::Lightbulb
+      expect(actor.type).to                   eq :device
+      expect(actor.id).to                     eq "406"
+      expect(actor.ain).to                    eq "11111 2233445"
+      expect(actor.name).to                   eq "Flurlampe"
+      expect(actor.manufacturer).to           eq "AVM"
+      expect(actor.group_members).to          be nil
     end
   end
 

@@ -10,6 +10,7 @@ require 'fritzbox/smarthome/actor'
 require 'fritzbox/smarthome/heater'
 require 'fritzbox/smarthome/switch'
 require 'fritzbox/smarthome/smoke_detector'
+require 'fritzbox/smarthome/lightbulb'
 
 module Fritzbox
   module Smarthome
