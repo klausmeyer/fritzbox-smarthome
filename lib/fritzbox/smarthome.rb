@@ -4,6 +4,7 @@ require 'httparty'
 require 'nori'
 
 require 'fritzbox/smarthome/version'
+require 'fritzbox/smarthome/null_logger'
 require 'fritzbox/smarthome/resource'
 require 'fritzbox/smarthome/actor'
 require 'fritzbox/smarthome/heater'
@@ -28,7 +29,7 @@ module Fritzbox
       defaults.username   = 'smarthome'
       defaults.password   = 'verysmart'
       defaults.verify_ssl = true
-      defaults.logger     = nil
+      defaults.logger     = NullLogger.new
     end
 
     class << self
