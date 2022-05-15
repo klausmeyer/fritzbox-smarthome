@@ -29,7 +29,7 @@ module Fritzbox
             ain:           data.dig('@identifier').to_s,
             present:       data.dig('present') == '1',
             name:          (data.dig('name') || data.dig('@productname')).to_s,
-            manufacturer:  data.dig('manufacturer').to_s,
+            manufacturer:  (data.dig('manufacturer') || data.dig('@manufacturer')).to_s,
             group_members: data.dig('groupinfo', 'members').to_s.split(',').presence
           )
         end

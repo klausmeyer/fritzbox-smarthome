@@ -66,7 +66,7 @@
       <state>0</state>
     </alert>
   </device>
-    <device identifier="12345 678905" id="13" functionbitmask="320" fwversion="03.54" productname="FRITZ!DECT 200">
+  <device identifier="12345 678905" id="13" functionbitmask="320" fwversion="03.54" productname="FRITZ!DECT 200">
     <present>1</present>
     <name>FRITZ!DECT 200 Steckdose</name>
     <manufacturer>AVM</manufacturer>
@@ -90,4 +90,13 @@
     </temperature>
   </device>
   <device identifier="12345 54321" id="4711" functionbitmask="007" fwversion="0815" productname="Sub-Etha Radio Transmitter"></device>
+  <device identifier="11111 2233445" id="406" functionbitmask="1" fwversion="34.10.16.16.015" manufacturer="AVM" productname="FRITZ!DECT 500">
+    <present>
+      1
+    </present>
+    <txbusy>
+      0
+    </txbusy>
+    <name>Flurlampe</name>
+  </device>
 </devicelist>

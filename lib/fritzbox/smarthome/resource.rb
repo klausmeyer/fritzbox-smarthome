@@ -2,10 +2,17 @@ module Fritzbox
   module Smarthome
     class Resource
       class << self
-        def get(command:, ain: nil, param: nil)
+        # @param params [Hash] key/value pairs that will be appended to the switchcmd query string
+        def get(command:, ain: nil, param: nil, **params)
           url = "#{config.endpoint}/webservices/homeautoswitch.lua?switchcmd=#{command}&sid=#{authenticate}"
           url = "#{url}&ain=#{ain}"     if ain.present?
           url = "#{url}&param=#{param}" if param.present?
+
+          params.each_with_object(url) do |(key, value)|
+            url = "#{url}&#{key}=#{value}"
+          end
+
+          config.logger.debug(url)
 
           HTTParty.get(url, **httparty_options)
         end
