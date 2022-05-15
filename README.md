@@ -5,6 +5,7 @@ Ruby client library to interface with Smarthome features of your FritzBox.
 Currently implemented actor types:
 
 * Heater
+* Lightbulb
 * SmokeDetector
 * Switch
 
