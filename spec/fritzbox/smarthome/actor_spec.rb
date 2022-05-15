@@ -15,7 +15,7 @@ RSpec.describe Fritzbox::Smarthome::Actor do
         to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
 
       actors = described_class.all
-      expect(actors.size).to eq 6
+      expect(actors.size).to eq 7
 
       actor = actors.shift
       expect(actor.class).to                  eq Fritzbox::Smarthome::Heater
@@ -71,6 +71,28 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       expect(actor.name).to                   eq "Sub-Etha Radio Transmitter"
       expect(actor.manufacturer).to           eq ""
       expect(actor.group_members).to          be nil
+    end
+  end
+
+  describe '.new_from_api' do
+    subject(:actor) { described_class.new_from_api(data) }
+
+    let(:data) { Hash.new }
+
+    context 'when setting the manufacturer' do
+      let!(:data) { { '@manufacturer' => 'Orang-Utan Klaus' } }
+
+      it 'sets #manufacturer based on an XML attribute' do
+        expect(actor.manufacturer).to eql 'Orang-Utan Klaus'
+      end
+
+      context "when an XML node is present" do
+        let!(:data) { { '@manufacturer' => 'Orang-Utan Klaus', 'manufacturer' => 'Telefonmann' } }
+
+        it "takes precedence over a @manufacturer XML attribute" do
+          expect(actor.manufacturer).to eql 'Telefonmann'
+        end
+      end
     end
   end
 end
