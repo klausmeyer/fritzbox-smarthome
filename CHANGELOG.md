@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.0
+
+* Add support for Fritz!DECT lightbulbs
+
 ## v0.3.0
 
 * Use generic Actor class for unrecognised device
