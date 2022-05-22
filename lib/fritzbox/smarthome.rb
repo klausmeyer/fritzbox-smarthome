@@ -5,6 +5,7 @@ require 'nori'
 
 require 'fritzbox/smarthome/version'
 require 'fritzbox/smarthome/null_logger'
+require 'fritzbox/smarthome/properties'
 require 'fritzbox/smarthome/resource'
 require 'fritzbox/smarthome/actor'
 require 'fritzbox/smarthome/heater'
