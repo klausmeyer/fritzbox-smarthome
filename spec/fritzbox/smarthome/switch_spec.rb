@@ -36,4 +36,12 @@ RSpec.describe Fritzbox::Smarthome::Switch do
       expect(smoke_detector.group_members).to          be nil
     end
   end
+
+  describe '#active?' do
+    it { is_expected.to respond_to :active? }
+  end
+
+  describe '#toggle!' do
+    it { is_expected.to respond_to :toggle! }
+  end
 end
