@@ -9,6 +9,8 @@ RSpec.describe Fritzbox::Smarthome::Switch do
       to_return(body: '<SessionInfo><SID>ff88e4d39354992f</SID></SessionInfo>')
   end
 
+  it_behaves_like "a device with a simple on/off interface"
+
   describe '.all' do
     it 'returns a list of switches' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
