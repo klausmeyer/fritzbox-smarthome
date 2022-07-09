@@ -9,6 +9,8 @@ RSpec.describe Fritzbox::Smarthome::Switch do
       to_return(body: '<SessionInfo><SID>ff88e4d39354992f</SID></SessionInfo>')
   end
 
+  it_behaves_like "a device with a simple on/off interface"
+
   describe '.all' do
     it 'returns a list of switches' do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
@@ -35,13 +37,5 @@ RSpec.describe Fritzbox::Smarthome::Switch do
       expect(smoke_detector.temperature_offset).to     eq -5
       expect(smoke_detector.group_members).to          be nil
     end
-  end
-
-  describe '#active?' do
-    it { is_expected.to respond_to :active? }
-  end
-
-  describe '#toggle!' do
-    it { is_expected.to respond_to :toggle! }
   end
 end
