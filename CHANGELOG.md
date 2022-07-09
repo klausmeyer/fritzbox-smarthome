@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.5.0
+
+* Unify on/off interface
+  * Provides `#active?` and `#toggle!` methods
+  * Adds new functionality to `Switch`
+  * Replacing own implementation in `Lightbulb`
+
 ## v0.4.0
 
 * Add support for Fritz!DECT lightbulbs
