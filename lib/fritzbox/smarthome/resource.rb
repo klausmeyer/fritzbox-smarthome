@@ -17,6 +17,10 @@ module Fritzbox
           HTTParty.get(url, **httparty_options)
         end
 
+        def parse(response)
+          nori.parse(response.body)
+        end
+
         private
 
         delegate :config, to: Smarthome
@@ -52,6 +56,8 @@ module Fritzbox
           @nori ||= Nori.new
         end
       end
+
+      delegate :get, :parse, to: :class
     end
   end
 end
