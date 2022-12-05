@@ -11,11 +11,15 @@ Fritzbox::Smarthome.configure do |config|
 end
 
 # Getting a list of actors
-
 pp actors = Fritzbox::Smarthome::Actor.all
 
 # Finding by AIN
-pp actor = Fritzbox::Smarthome::Actor.find_by!(ain: actors.first.ain)
+begin
+  Fritzbox::Smarthome::Actor.find_by!(ain: '0815 4711')
+rescue Fritzbox::Smarthome::Actor::ResourceNotFound => e
+  pp e
+end
 
 # Reload
+actor = Fritzbox::Smarthome::Actor.find_by!(ain: actors.first.ain)
 pp actor.reload

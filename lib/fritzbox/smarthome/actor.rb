@@ -24,16 +24,15 @@ module Fritzbox
           end.compact
         end
 
-        def find_by!(id: nil, ain: nil)
-          raise ArgumentError, 'Find via :id is not implmentet yet' if id.present?
-          raise ArgumentError, 'Missing argument :ain' if ain.nil?
-
+        def find_by!(ain: nil)
           data = parse(get(command: 'getdeviceinfos', ain: ain)).fetch('device')
           klass = Actor.descendants.find { |k| k.match?(data) } || Actor
 
           instance = klass.new(ain: ain)
           instance.assign_from_api(data)
           instance
+        rescue KeyError
+          raise ResourceNotFound, "Unable to find actor with ain='#{ain}'"
         end
 
         def new_from_api(data)
@@ -60,7 +59,7 @@ module Fritzbox
         assign_from_api(xml.fetch('device'))
         self
       rescue KeyError
-        raise ResourceNotFound
+        raise ResourceNotFound, "Unable to reload actor with ain='#{ain}'"
       end
     end
   end

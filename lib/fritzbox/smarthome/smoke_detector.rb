@@ -16,8 +16,8 @@ module Fritzbox
         super(data)
 
         assign_attributes(
-            alert_state: data.dig('alert', 'state').to_i,
-            last_alert:  Time.at(data.dig('alert', 'lastalertchgtimestamp').to_i)
+          alert_state: data.dig('alert', 'state').to_i,
+          last_alert:  Time.at(data.dig('alert', 'lastalertchgtimestamp').to_i)
         )
       end
     end
