@@ -19,22 +19,22 @@ module Fritzbox
         def match?(data)
           data.key?('switch')
         end
+      end
 
-        def new_from_api(data)
-          instance = super
-          instance.assign_attributes(
-            switch_state:        data.dig('switch', 'state').to_i,
-            switch_mode:         data.dig('switch', 'mode').to_s,
-            switch_lock:         data.dig('switch', 'lock').to_i,
-            switch_devicelock:   data.dig('switch', 'devicelock').to_i,
-            powermeter_voltage:  data.dig('powermeter', 'voltage').to_i,
-            powermeter_power:    data.dig('powermeter', 'power').to_i,
-            powermeter_energy:   data.dig('powermeter', 'energy').to_i,
-            temperature_celsius: data.dig('temperature', 'celsius').to_i,
-            temperature_offset:  data.dig('temperature', 'offset').to_i
-          )
-          instance
-        end
+      def assign_from_api(data)
+        super(data)
+
+        assign_attributes(
+          switch_state:        data.dig('switch', 'state').to_i,
+          switch_mode:         data.dig('switch', 'mode').to_s,
+          switch_lock:         data.dig('switch', 'lock').to_i,
+          switch_devicelock:   data.dig('switch', 'devicelock').to_i,
+          powermeter_voltage:  data.dig('powermeter', 'voltage').to_i,
+          powermeter_power:    data.dig('powermeter', 'power').to_i,
+          powermeter_energy:   data.dig('powermeter', 'energy').to_i,
+          temperature_celsius: data.dig('temperature', 'celsius').to_i,
+          temperature_offset:  data.dig('temperature', 'offset').to_i
+        )
       end
     end
   end

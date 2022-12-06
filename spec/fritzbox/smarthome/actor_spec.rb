@@ -104,4 +104,72 @@ RSpec.describe Fritzbox::Smarthome::Actor do
       end
     end
   end
+
+  describe '.find_by!(ain:)' do
+    let(:ain) { '0815 4711' }
+
+    before do
+      stub_request(:get, "https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdeviceinfos&ain=#{ain}").
+        to_return(body: response_body)
+    end
+
+    context 'with an ain known by the api' do
+      let(:response_body) do
+        File.read(File.expand_path('../../../support/fixtures/getdeviceinfos.xml', __FILE__))
+      end
+
+      it 'returns an instance filled with data' do
+        actor = described_class.find_by!(ain: ain)
+
+        expect(actor.ain).to eq ain
+        expect(actor.manufacturer).to eq 'ACME'
+      end
+    end
+
+    context 'with an unknown ain' do
+      let(:response_body) do
+        '{}'
+      end
+
+      it 'raises a ResourceNotFound error' do
+        expect { described_class.find_by!(ain: ain) }.to raise_error Fritzbox::Smarthome::Actor::ResourceNotFound, "Unable to find actor with ain='#{ain}'"
+      end
+    end
+  end
+
+  describe '#reload' do
+    let(:ain) { '0815 4711' }
+
+    before do
+      stub_request(:get, "https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdeviceinfos&ain=#{ain}").
+        to_return(body: response_body)
+    end
+
+    context 'with an ain known by the api' do
+      let(:response_body) do
+        File.read(File.expand_path('../../../support/fixtures/getdeviceinfos.xml', __FILE__))
+      end
+
+      it 'returns an instance filled with data' do
+        actor = described_class.new(ain: ain)
+        actor.manufacturer = 'DUMMY'
+
+        actor.reload
+
+        expect(actor.manufacturer).to eq 'ACME'
+      end
+    end
+
+    context 'with an unknown ain' do
+      let(:response_body) do
+        '{}'
+      end
+
+      it 'raises a ResourceNotFound error' do
+        actor = described_class.new(ain: ain)
+
+        expect { actor.reload }.to raise_error Fritzbox::Smarthome::Actor::ResourceNotFound, "Unable to reload actor with ain='#{ain}'"
+      end
+    end
+  end
 end
