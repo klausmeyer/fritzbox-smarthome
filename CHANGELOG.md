@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0
+
+* Add support for `Actor.find_by!(ain:)` and `Actor#reload`
+
 ## v0.5.0
 
 * Unify on/off interface
