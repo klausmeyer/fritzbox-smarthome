@@ -13,8 +13,9 @@ module Fritzbox
           end
 
           config.logger.debug(url)
-
-          HTTParty.get(url, **httparty_options)
+          measure(url) do
+            HTTParty.get(url, **httparty_options)
+          end
         end
 
         def parse(response)
@@ -26,19 +27,21 @@ module Fritzbox
         delegate :config, to: Smarthome
 
         def authenticate
-          response = HTTParty.get(login_endpoint, **httparty_options)
-          xml = nori.parse(response.body)
-          challenge = xml.dig('SessionInfo', 'Challenge')
+          measure("authentication") do
+            response = HTTParty.get(login_endpoint, **httparty_options)
+            xml = nori.parse(response.body)
+            challenge = xml.dig('SessionInfo', 'Challenge')
 
-          md5 = Digest::MD5.hexdigest("#{challenge}-#{config.password}".encode('UTF-16LE'))
+            md5 = Digest::MD5.hexdigest("#{challenge}-#{config.password}".encode('UTF-16LE'))
 
-          url = "#{login_endpoint}?response=#{challenge}-#{md5}"
-          url = "#{url}&username=#{config.username}" if config.username.present?
+            url = "#{login_endpoint}?response=#{challenge}-#{md5}"
+            url = "#{url}&username=#{config.username}" if config.username.present?
 
-          response = HTTParty.get(url, **httparty_options)
+            response = HTTParty.get(url, **httparty_options)
 
-          xml = nori.parse(response.body)
-          xml.dig('SessionInfo', 'SID')
+            xml = nori.parse(response.body)
+            xml.dig('SessionInfo', 'SID')
+          end
         end
 
         def login_endpoint
@@ -54,6 +57,14 @@ module Fritzbox
 
         def nori
           @nori ||= Nori.new
+        end
+
+        def measure(identifier, &block)
+          time_start = Time.now
+          result = block.call
+          time_elapsed = (Time.now - time_start).to_f.round(3)
+          config.logger.debug("Request `#{identifier}` took #{time_elapsed} seconds")
+          result
         end
       end
 
