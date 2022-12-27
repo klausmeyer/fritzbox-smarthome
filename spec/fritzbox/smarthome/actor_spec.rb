@@ -1,19 +1,41 @@
 require 'spec_helper'
 
 RSpec.describe Fritzbox::Smarthome::Actor do
-  before do
+  let!(:login_challenge_request) do
     stub_request(:get, 'https://fritz.box/login_sid.lua').
       to_return(body: '<SessionInfo><Challenge>1234567z</Challenge></SessionInfo>')
+  end
 
+  let!(:login_response_request) do
     stub_request(:get, 'https://fritz.box/login_sid.lua?response=1234567z-8d08321fe007cd28e2eae9f9051628db&username=smarthome').
       to_return(body: '<SessionInfo><SID>ff88e4d39354992f</SID></SessionInfo>')
   end
 
-  describe '.all' do
-    it 'returns a list of all actors' do
+  describe 'caching of authentication' do
+    before do
       stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
         to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
 
+      stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?ain=12345%20678901&sid=ff88e4d39354992f&switchcmd=getdeviceinfos').
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdeviceinfos.xml', __FILE__)))
+    end
+
+    it 'caches the authorization between requests' do
+      list  = described_class.all
+      actor = described_class.find_by!(ain: list.first.ain)
+
+      expect(login_challenge_request).to have_been_made.once
+      expect(login_response_request).to have_been_made.once
+    end
+  end
+
+  describe '.all' do
+    before do
+      stub_request(:get, 'https://fritz.box/webservices/homeautoswitch.lua?sid=ff88e4d39354992f&switchcmd=getdevicelistinfos').
+        to_return(body: File.read(File.expand_path('../../../support/fixtures/getdevicelistinfos.xml', __FILE__)))
+    end
+
+    it 'returns a list of all actors' do
       actors = described_class.all
       expect(actors.size).to eq 7
 

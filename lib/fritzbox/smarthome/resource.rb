@@ -1,6 +1,10 @@
 module Fritzbox
   module Smarthome
     class Resource
+      cattr_accessor :session
+
+      AuthenticationError = Class.new(RuntimeError)
+
       class << self
         # @param params [Hash] key/value pairs that will be appended to the switchcmd query string
         def get(command:, ain: nil, param: nil, **params)
@@ -12,10 +16,16 @@ module Fritzbox
             url = "#{url}&#{key}=#{value}"
           end
 
-          config.logger.debug(url)
-          measure(url) do
-            HTTParty.get(url, **httparty_options)
-          end
+          response = measure(url) { HTTParty.get(url, **httparty_options) }
+
+          raise AuthenticationError if response.code == 403
+
+          response
+        rescue AuthenticationError
+          raise if session.nil?
+
+          self.session = nil
+          retry
         end
 
         def parse(response)
@@ -27,7 +37,9 @@ module Fritzbox
         delegate :config, to: Smarthome
 
         def authenticate
-          measure("authentication") do
+          return session.id if session.present? && session.valid?
+
+          session_id = measure("authentication") do
             response = HTTParty.get(login_endpoint, **httparty_options)
             xml = nori.parse(response.body)
             challenge = xml.dig('SessionInfo', 'Challenge')
@@ -40,8 +52,13 @@ module Fritzbox
             response = HTTParty.get(url, **httparty_options)
 
             xml = nori.parse(response.body)
+
             xml.dig('SessionInfo', 'SID')
           end
+
+          self.session = Session.new(session_id)
+
+          session_id
         end
 
         def login_endpoint
