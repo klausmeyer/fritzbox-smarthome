@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.0
+
+* Measure HTTP request duration
+  * Print the request time in debug log-level
+* Cache authentication between requests
+  * Keep the returned SessionID for 60 minutes in memory
+
 ## v0.6.0
 
 * Add support for `Actor.find_by!(ain:)` and `Actor#reload`
