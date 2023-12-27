@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activesupport', '>= 5.1', '<= 7.1'
   spec.add_dependency 'activemodel', '>= 5.1', '<= 7.1'
+  spec.add_dependency 'csv', '~> 3.2' # For httparty to silence deprecation warning in ruby >= 3.3.0
   spec.add_dependency 'httparty', '~> 0.20'
   spec.add_dependency 'nori', '~> 2.6'
   spec.add_dependency 'nokogiri', '~> 1.13'
