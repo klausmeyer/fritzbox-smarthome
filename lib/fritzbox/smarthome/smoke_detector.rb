@@ -1,10 +1,8 @@
 module Fritzbox
   module Smarthome
     class SmokeDetector < Actor
-
-      attr_accessor \
-        :alert_state,
-        :last_alert
+      attribute :alert_state, :integer
+      attribute :last_alert, :time
 
       class << self
         def match?(data)

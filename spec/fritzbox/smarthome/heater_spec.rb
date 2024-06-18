@@ -18,32 +18,36 @@ RSpec.describe Fritzbox::Smarthome::Heater do
       expect(heaters.size).to eq 2
 
       heater = heaters.shift
-      expect(heater.type).to                   eq :device
-      expect(heater.id).to                     eq '18'
-      expect(heater.ain).to                    eq '12345 678901'
-      expect(heater.name).to                   eq 'Heizung Wohnzimmer'
-      expect(heater.manufacturer).to           eq 'AVM'
-      expect(heater.battery).to                eq 80
-      expect(heater.batterylow).to             eq 0
-      expect(heater.hkr_temp_is).to            eq 20.5
-      expect(heater.hkr_temp_set).to           eq 16.0
-      expect(heater.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
-      expect(heater.hkr_next_change_temp).to   eq 23.0
-      expect(heater.group_members).to          be nil
+      expect(heater.attributes).to include(
+        'type'                   => :device,
+        'id'                     => '18',
+        'ain'                    => '12345 678901',
+        'name'                   => 'Heizung Wohnzimmer',
+        'manufacturer'           => 'AVM',
+        'battery'                => 80,
+        'batterylow'             => 0,
+        'hkr_temp_is'            => 20.5,
+        'hkr_temp_set'           => 16.0,
+        'hkr_next_change_period' => Time.new(2018, 4, 10, 6, 0, 0, '+02:00'),
+        'hkr_next_change_temp'   => 23.0,
+        'group_members'          => nil,
+      )
 
       heater = heaters.shift
-      expect(heater.type).to                   eq :device
-      expect(heater.id).to                     eq '16'
-      expect(heater.ain).to                    eq '12345 678902'
-      expect(heater.name).to                   eq 'Heizung Küche'
-      expect(heater.manufacturer).to           eq 'AVM'
-      expect(heater.battery).to                eq 10
-      expect(heater.batterylow).to             eq 1
-      expect(heater.hkr_temp_is).to            eq 20.5
-      expect(heater.hkr_temp_set).to           eq 16.0
-      expect(heater.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
-      expect(heater.hkr_next_change_temp).to   eq 23.0
-      expect(heater.group_members).to          be nil
+      expect(heater.attributes).to include(
+        'type'                   => :device,
+        'id'                     => '16',
+        'ain'                    => '12345 678902',
+        'name'                   => 'Heizung Küche',
+        'manufacturer'           => 'AVM',
+        'battery'                => 10,
+        'batterylow'             => 1,
+        'hkr_temp_is'            => 20.5,
+        'hkr_temp_set'           => 16.0,
+        'hkr_next_change_period' => Time.new(2018, 4, 10, 6, 0, 0, '+02:00'),
+        'hkr_next_change_temp'   => 23.0,
+        'group_members'          => nil,
+      )
     end
 
     it 'returns a list of heaters and group' do
@@ -54,43 +58,49 @@ RSpec.describe Fritzbox::Smarthome::Heater do
       expect(heaters.size).to eq 3
 
       heater = heaters.shift
-      expect(heater.type).to                   eq :group
-      expect(heater.id).to                     eq '900'
-      expect(heater.ain).to                    eq '65:0A:0C-900'
-      expect(heater.name).to                   eq 'Heizungen'
-      expect(heater.hkr_temp_is).to            eq 21.0
-      expect(heater.hkr_temp_set).to           eq 16.0
-      expect(heater.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
-      expect(heater.hkr_next_change_temp).to   eq 23.0
-      expect(heater.group_members).to          eq ['18', '16']
+      expect(heater.attributes).to include(
+        'type'                   => :group,
+        'id'                     => '900',
+        'ain'                    => '65:0A:0C-900',
+        'name'                   => 'Heizungen',
+        'hkr_temp_is'            => 21.0,
+        'hkr_temp_set'           => 16.0,
+        'hkr_next_change_period' => Time.new(2018, 4, 10, 6, 0, 0, '+02:00'),
+        'hkr_next_change_temp'   => 23.0,
+        'group_members'          => ['18', '16'],
+      )
 
       heater = heaters.shift
-      expect(heater.type).to                   eq :device
-      expect(heater.id).to                     eq '18'
-      expect(heater.ain).to                    eq '12345 678901'
-      expect(heater.name).to                   eq 'Heizung Wohnzimmer'
-      expect(heater.manufacturer).to           eq 'AVM'
-      expect(heater.battery).to                eq 80
-      expect(heater.batterylow).to             eq 0
-      expect(heater.hkr_temp_is).to            eq 20.5
-      expect(heater.hkr_temp_set).to           eq 16.0
-      expect(heater.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
-      expect(heater.hkr_next_change_temp).to   eq 23.0
-      expect(heater.group_members).to          be nil
+      expect(heater.attributes).to include(
+        'type'                   => :device,
+        'id'                     => '18',
+        'ain'                    => '12345 678901',
+        'name'                   => 'Heizung Wohnzimmer',
+        'manufacturer'           => 'AVM',
+        'battery'                => 80,
+        'batterylow'             => 0,
+        'hkr_temp_is'            => 20.5,
+        'hkr_temp_set'           => 16.0,
+        'hkr_next_change_period' => Time.new(2018, 4, 10, 6, 0, 0, '+02:00'),
+        'hkr_next_change_temp'   => 23.0,
+        'group_members'          => nil,
+      )
 
       heater = heaters.shift
-      expect(heater.type).to                   eq :device
-      expect(heater.id).to                     eq '16'
-      expect(heater.ain).to                    eq '12345 678902'
-      expect(heater.name).to                   eq 'Heizung Küche'
-      expect(heater.manufacturer).to           eq 'AVM'
-      expect(heater.battery).to                eq 80
-      expect(heater.batterylow).to             eq 0
-      expect(heater.hkr_temp_is).to            eq 20.5
-      expect(heater.hkr_temp_set).to           eq 16.0
-      expect(heater.hkr_next_change_period).to eq Time.new(2018, 4, 10, 6, 0, 0, '+02:00')
-      expect(heater.hkr_next_change_temp).to   eq 23.0
-      expect(heater.group_members).to          be nil
+      expect(heater.attributes).to include(
+        'type'                   => :device,
+        'id'                     => '16',
+        'ain'                    => '12345 678902',
+        'name'                   => 'Heizung Küche',
+        'manufacturer'           => 'AVM',
+        'battery'                => 80,
+        'batterylow'             => 0,
+        'hkr_temp_is'            => 20.5,
+        'hkr_temp_set'           => 16.0,
+        'hkr_next_change_period' => Time.new(2018, 4, 10, 6, 0, 0, '+02:00'),
+        'hkr_next_change_temp'   => 23.0,
+        'group_members'          => nil,
+      )
     end
   end
 

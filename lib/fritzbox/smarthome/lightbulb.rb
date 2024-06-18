@@ -1,9 +1,6 @@
-# frozen_string_literal: true
-
 module Fritzbox
   module Smarthome
     class Lightbulb < Actor
-
       include Properties::SimpleOnOff
 
       class << self

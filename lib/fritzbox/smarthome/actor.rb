@@ -2,15 +2,15 @@ module Fritzbox
   module Smarthome
     class Actor < Resource
       include ActiveModel::Model
+      include ActiveModel::Attributes
 
-      attr_accessor \
-      :id,
-      :type,
-      :ain,
-      :present,
-      :name,
-      :manufacturer,
-      :group_members
+      attribute :id, :string
+      attribute :type #, :symbol
+      attribute :ain, :string
+      attribute :present, :string
+      attribute :name, :string
+      attribute :manufacturer, :string
+      attribute :group_members #, :string, array: true
 
       ResourceNotFound = Class.new(RuntimeError)
 

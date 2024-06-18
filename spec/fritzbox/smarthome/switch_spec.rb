@@ -20,22 +20,24 @@ RSpec.describe Fritzbox::Smarthome::Switch do
       expect(smoke_detectors.size).to eq 1
 
       smoke_detector = smoke_detectors.shift
-      expect(smoke_detector.type).to                   eq :device
-      expect(smoke_detector.id).to                     eq '13'
-      expect(smoke_detector.ain).to                    eq '12345 678905'
-      expect(smoke_detector.name).to                   eq 'FRITZ!DECT 200 Steckdose'
-      expect(smoke_detector.manufacturer).to           eq 'AVM'
-      expect(smoke_detector.switch_state).to           eq 0
-      expect(smoke_detector.switch_mode).to            eq 'manuell'
-      expect(smoke_detector.switch_lock).to            eq 0
-      expect(smoke_detector.switch_devicelock).to      eq 0
-      expect(smoke_detector.simpleonoff_state).to      eq 0
-      expect(smoke_detector.powermeter_voltage).to     eq 237894
-      expect(smoke_detector.powermeter_power).to       eq 0
-      expect(smoke_detector.powermeter_energy).to      eq 244
-      expect(smoke_detector.temperature_celsius).to    eq 200
-      expect(smoke_detector.temperature_offset).to     eq -5
-      expect(smoke_detector.group_members).to          be nil
+      expect(smoke_detector.attributes).to include(
+        'type'                => :device,
+        'id'                  => '13',
+        'ain'                 => '12345 678905',
+        'name'                => 'FRITZ!DECT 200 Steckdose',
+        'manufacturer'        => 'AVM',
+        'switch_state'        => 0,
+        'switch_mode'         => 'manuell',
+        'switch_lock'         => 0,
+        'switch_devicelock'   => 0,
+        'simpleonoff_state'   => 0,
+        'powermeter_voltage'  => 237894,
+        'powermeter_power'    => 0,
+        'powermeter_energy'   => 244,
+        'temperature_celsius' => 200,
+        'temperature_offset'  => -5,
+        'group_members'       => nil,
+      )
     end
   end
 end
