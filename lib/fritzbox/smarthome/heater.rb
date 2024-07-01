@@ -1,14 +1,12 @@
 module Fritzbox
   module Smarthome
     class Heater < Actor
-
-      attr_accessor \
-        :battery,
-        :batterylow,
-        :hkr_temp_is,
-        :hkr_temp_set,
-        :hkr_next_change_period,
-        :hkr_next_change_temp
+      attribute :battery, :integer
+      attribute :batterylow, :integer
+      attribute :hkr_temp_is, :float
+      attribute :hkr_temp_set, :float
+      attribute :hkr_next_change_period, :time
+      attribute :hkr_next_change_temp, :float
 
       class << self
         def match?(data)

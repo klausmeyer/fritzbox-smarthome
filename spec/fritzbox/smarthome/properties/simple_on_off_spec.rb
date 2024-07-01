@@ -1,14 +1,20 @@
-# frozen_string_literal: true
-
 RSpec.describe Fritzbox::Smarthome::Properties::SimpleOnOff do
   subject(:instance) { generic_class.new }
 
   let(:generic_class) do
-    Class.new {
+    Class.new do
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+      include Fritzbox::Smarthome::Properties::SimpleOnOff
+
+      def self.match?
+        false
+      end
+
       def ain
         @ain ||= ("A".."Z").to_a.shuffle.sample(6).join
       end
-    }.include described_class
+    end
   end
 
   it "adds a `new_from_api` class method if it doesn't exist" do
@@ -51,8 +57,6 @@ RSpec.describe Fritzbox::Smarthome::Properties::SimpleOnOff do
     end
 
     context "when the device is currently OFF" do
-      subject(:toggle!) { instance_on.toggle! }
-
       let(:instance_off) { instance.tap { |o| o.simpleonoff_state = "0" } }
 
       context "when the GET request is successful" do

@@ -24,11 +24,13 @@ RSpec.describe Fritzbox::Smarthome::Lightbulb do
       expect(lightbulbs.size).to eq 1
 
       lightbulb = lightbulbs.shift
-      expect(lightbulb.type).to                   eq :device
-      expect(lightbulb.id).to                     eq '406'
-      expect(lightbulb.ain).to                    eq '11111 2233445'
-      expect(lightbulb.name).to                   eq 'Flurlampe'
-      expect(lightbulb.manufacturer).to           eq 'AVM'
+      expect(lightbulb.attributes).to include(
+        'type'         => :device,
+        'id'           => '406',
+        'ain'          => '11111 2233445',
+        'name'         => 'Flurlampe',
+        'manufacturer' => 'AVM',
+      )
     end
   end
 end

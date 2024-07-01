@@ -18,13 +18,13 @@ module Fritzbox
   module Smarthome
     class Configuration
       include ActiveModel::Model
+      include ActiveModel::Attributes
 
-      attr_accessor \
-        :endpoint, \
-        :username, \
-        :password,
-        :verify_ssl,
-        :logger
+      attribute :endpoint,   :string
+      attribute :username,   :string
+      attribute :password,   :string
+      attribute :verify_ssl, :boolean
+      attribute :logger
     end
 
     @config = Configuration.new.tap do |defaults|

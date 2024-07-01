@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.8.0
+
+* Use `ActiveModel::Attributes`
+* Allow usage in Rails `7.1` and `7.2`
+* Drop usage in Rails `< 7.0`
+
 ## v0.7.0
 
 * Measure HTTP request duration

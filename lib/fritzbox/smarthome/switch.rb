@@ -1,19 +1,17 @@
 module Fritzbox
   module Smarthome
     class Switch < Actor
-
       include Properties::SimpleOnOff
 
-      attr_accessor \
-        :switch_state,
-        :switch_mode,
-        :switch_lock,
-        :switch_devicelock,
-        :powermeter_voltage,
-        :powermeter_power,
-        :powermeter_energy,
-        :temperature_celsius,
-        :temperature_offset
+      attribute :switch_state, :integer
+      attribute :switch_mode, :string
+      attribute :switch_lock, :integer
+      attribute :switch_devicelock, :integer
+      attribute :powermeter_voltage, :integer
+      attribute :powermeter_power, :integer
+      attribute :powermeter_energy, :integer
+      attribute :temperature_celsius, :integer
+      attribute :temperature_offset, :integer
 
       class << self
         def match?(data)
@@ -25,15 +23,15 @@ module Fritzbox
         super(data)
 
         assign_attributes(
-          switch_state:        data.dig('switch', 'state').to_i,
-          switch_mode:         data.dig('switch', 'mode').to_s,
-          switch_lock:         data.dig('switch', 'lock').to_i,
-          switch_devicelock:   data.dig('switch', 'devicelock').to_i,
-          powermeter_voltage:  data.dig('powermeter', 'voltage').to_i,
-          powermeter_power:    data.dig('powermeter', 'power').to_i,
-          powermeter_energy:   data.dig('powermeter', 'energy').to_i,
-          temperature_celsius: data.dig('temperature', 'celsius').to_i,
-          temperature_offset:  data.dig('temperature', 'offset').to_i
+          switch_state:        data.dig('switch', 'state'),
+          switch_mode:         data.dig('switch', 'mode'),
+          switch_lock:         data.dig('switch', 'lock'),
+          switch_devicelock:   data.dig('switch', 'devicelock'),
+          powermeter_voltage:  data.dig('powermeter', 'voltage'),
+          powermeter_power:    data.dig('powermeter', 'power'),
+          powermeter_energy:   data.dig('powermeter', 'energy'),
+          temperature_celsius: data.dig('temperature', 'celsius'),
+          temperature_offset:  data.dig('temperature', 'offset')
         )
       end
     end
