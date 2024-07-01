@@ -24,8 +24,7 @@ module Fritzbox
       attribute :username,   :string
       attribute :password,   :string
       attribute :verify_ssl, :boolean
-
-      attr_accessor :logger
+      attribute :logger
     end
 
     @config = Configuration.new.tap do |defaults|
