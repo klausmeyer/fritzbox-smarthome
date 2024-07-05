@@ -9,20 +9,20 @@ module Fritzbox
         extend ActiveSupport::Concern
 
         included do
-          attr_accessor :simpleonoff_state
+          attribute :simpleonoff_state, :integer
         end
 
         module ClassMethods
           def new_from_api(data)
             instance = defined?(super) ? super : new
-            instance.simpleonoff_state = data.dig('simpleonoff', 'state').to_i
+            instance.simpleonoff_state = data.dig('simpleonoff', 'state')
             instance
           end
         end
 
         # @return [Boolean]
         def active?
-          simpleonoff_state.to_s == "1"
+          simpleonoff_state == 1
         end
 
         # Makes a request to the Fritzbox and set the current instance's active state.
@@ -43,10 +43,9 @@ module Fritzbox
         def toggle!
           raise ArgumentError, "Attribute `ain` is missing on #{inspect}" unless respond_to?(:ain)
           value = active? ? 0 : 1
-          response =
-            Fritzbox::Smarthome::Resource.get(command: 'setsimpleonoff', ain: ain, onoff: value)
+          response = Fritzbox::Smarthome::Resource.get(command: 'setsimpleonoff', ain: ain, onoff: value)
 
-          response.ok? && @simpleonoff_state = value
+          response.ok? && self.simpleonoff_state = value
         end
       end
     end

@@ -18,22 +18,26 @@ RSpec.describe Fritzbox::Smarthome::SmokeDetector do
       expect(smoke_detectors.size).to eq 2
 
       smoke_detector = smoke_detectors.shift
-      expect(smoke_detector.type).to                   eq :device
-      expect(smoke_detector.id).to                     eq '15'
-      expect(smoke_detector.ain).to                    eq '12345 678903'
-      expect(smoke_detector.name).to                   eq 'Rauchmelder Wohnzimmer'
-      expect(smoke_detector.manufacturer).to           eq '0x2c3c'
-      expect(smoke_detector.alert_state).to            eq 0
-      expect(smoke_detector.group_members).to          be nil
+      expect(smoke_detector.attributes).to include(
+        'type'          => :device,
+        'id'            => '15',
+        'ain'           => '12345 678903',
+        'name'          => 'Rauchmelder Wohnzimmer',
+        'manufacturer'  => '0x2c3c',
+        'alert_state'   => 0,
+        'group_members' => nil,
+      )
 
       smoke_detector = smoke_detectors.shift
-      expect(smoke_detector.type).to                   eq :device
-      expect(smoke_detector.id).to                     eq '14'
-      expect(smoke_detector.ain).to                    eq '12345 678904'
-      expect(smoke_detector.name).to                   eq 'Rauchmelder Küche'
-      expect(smoke_detector.manufacturer).to           eq '0x2c3c'
-      expect(smoke_detector.alert_state).to            eq 0
-      expect(smoke_detector.group_members).to          be nil
+      expect(smoke_detector.attributes).to include(
+        'type'          => :device,
+        'id'            => '14',
+        'ain'           => '12345 678904',
+        'name'          => 'Rauchmelder Küche',
+        'manufacturer'  => '0x2c3c',
+        'alert_state'   => 0,
+        'group_members' => nil,
+      )
     end
   end
 end
