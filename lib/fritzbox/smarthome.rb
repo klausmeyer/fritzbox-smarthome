@@ -1,6 +1,7 @@
 require 'active_model'
 require 'active_support/all'
 require 'httparty'
+require 'stringio'
 require 'nori'
 
 require 'fritzbox/smarthome/version'
