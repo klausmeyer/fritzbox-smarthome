@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'activesupport', '>= 7.0', '< 8.1'
-  spec.add_dependency 'activemodel', '>= 7.0', '< 8.1'
+  spec.add_dependency 'activemodel', '>= 7.0', '<= 8.1.0'
   spec.add_dependency 'csv', '~> 3.2' # For httparty to silence deprecation warning in ruby >= 3.3.0
   spec.add_dependency 'httparty', '~> 0.20'
   spec.add_dependency 'nori', '~> 2.6'
