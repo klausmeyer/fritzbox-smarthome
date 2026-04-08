@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.2
+
+* fix: Support for Rails `8.1.x`
+
 ## v0.8.1
 
 * fix: Support for Rails `8.0.x`
