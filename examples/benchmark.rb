@@ -4,9 +4,9 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'fritzbox/smarthome'
 
 Fritzbox::Smarthome.configure do |config|
-  config.endpoint   = 'https://fritz.box'
-  config.username   = 'smarthome'
-  config.password   = 'verysmart'
+  config.endpoint   = ENV.fetch('FRITZBOX_ENDPOINT', 'https://fritz.box')
+  config.username   = ENV.fetch('FRITZBOX_USERNAME', 'smarthome')
+  config.password   = ENV.fetch('FRITZBOX_PASSWORD', 'verysmart')
   config.verify_ssl = false
   config.logger     = Logger.new(STDOUT)
 end
