@@ -1,7 +1,7 @@
 require 'bundler/setup'
 require 'fritzbox/smarthome'
 
-require 'byebug'
+require 'debug'
 require 'webmock/rspec'
 
 Dir[File.expand_path("../support/**/*.rb", __FILE__)].each {|f| require f}
